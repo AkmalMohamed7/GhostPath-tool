@@ -148,4 +148,4 @@ Here is what a typical enumeration scan looks like:
 ## 📝 Author & Version
 
 - **Author**: Team E
-- **Version**: 2.0 (GhostPath Redesign)
+- **Version**: 2.0
