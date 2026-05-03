@@ -107,11 +107,11 @@ function Show-Banner {
     Write-Color "║                       Version 2.0 - Professional                      ║" $Colors.Banner
     Write-Color "╚═══════════════════════════════════════════════════════════════════════╝" $Colors.Banner
     Write-Host ""
-    Write-Color "  [+]" $Colors.Success -NoNewLine; Write-Host " Target Domain: $DN" $Colors.Key
-    Write-Color "  [+]" $Colors.Success -NoNewLine; Write-Host " Primary DC   : $PDC" $Colors.Key
-    Write-Color "  [+]" $Colors.Success -NoNewLine; Write-Host " LDAP Path   : LDAP://$PDC/$DN" $Colors.Key
+    Write-Color "  [+]" $Colors.Success -NoNewLine; Write-Color " Target Domain: $DN" $Colors.Key
+    Write-Color "  [+]" $Colors.Success -NoNewLine; Write-Color " Primary DC   : $PDC" $Colors.Key
+    Write-Color "  [+]" $Colors.Success -NoNewLine; Write-Color " LDAP Path   : LDAP://$PDC/$DN" $Colors.Key
     Write-Host ""
-    Write-Host ("─" * 76) $Colors.Separator
+    Write-Color ("─" * 76) $Colors.Separator
     Write-Host ""
 }
 
@@ -122,39 +122,39 @@ function Show-Help {
     Show-Banner
     Write-Color "USAGE:" $Colors.Section
     Write-Host ""
-    Write-Host "  .\GhostPath.ps1 [-ObjType <type>] [-Name <name>] [-Propertie <property>]" $Colors.Key
+    Write-Color "  .\GhostPath.ps1 [-ObjType <type>] [-Name <name>] [-Propertie <property>]" $Colors.Key
     Write-Host ""
     Write-Color "PARAMETERS:" $Colors.Section
     Write-Host ""
-    Write-Host "  -ObjType <type>    Object type to enumerate:" $Colors.Key
-    Write-Host "                     U - Users" $Colors.Value
-    Write-Host "                     M - Machines/Computers" $Colors.Value
-    Write-Host "                     G - Groups" $Colors.Value
+    Write-Color "  -ObjType <type>    Object type to enumerate:" $Colors.Key
+    Write-Color "                     U - Users" $Colors.Value
+    Write-Color "                     M - Machines/Computers" $Colors.Value
+    Write-Color "                     G - Groups" $Colors.Value
     Write-Host ""
-    Write-Host "  -Name <name>       Specific object name to query" $Colors.Key
+    Write-Color "  -Name <name>       Specific object name to query" $Colors.Key
     Write-Host ""
-    Write-Host "  -Propertie <prop>  Specific property to retrieve (use * for all)" $Colors.Key
+    Write-Color "  -Propertie <prop>  Specific property to retrieve (use * for all)" $Colors.Key
     Write-Host ""
-    Write-Host "  -Help              Show this help message" $Colors.Key
+    Write-Color "  -Help              Show this help message" $Colors.Key
     Write-Host ""
     Write-Color "EXAMPLES:" $Colors.Section
     Write-Host ""
-    Write-Host "  Enumerate all objects:" $Colors.Warning
-    Write-Host "    .\GhostPath.ps1" $Colors.Key
+    Write-Color "  Enumerate all objects:" $Colors.Warning
+    Write-Color "    .\GhostPath.ps1" $Colors.Key
     Write-Host ""
-    Write-Host "  Enumerate only users:" $Colors.Warning
-    Write-Host "    .\GhostPath.ps1 -ObjType U" $Colors.Key
+    Write-Color "  Enumerate only users:" $Colors.Warning
+    Write-Color "    .\GhostPath.ps1 -ObjType U" $Colors.Key
     Write-Host ""
-    Write-Host "  Enumerate only machines:" $Colors.Warning
-    Write-Host "    .\GhostPath.ps1 -ObjType M" $Colors.Key
+    Write-Color "  Enumerate only machines:" $Colors.Warning
+    Write-Color "    .\GhostPath.ps1 -ObjType M" $Colors.Key
     Write-Host ""
-    Write-Host "  Enumerate only groups:" $Colors.Warning
-    Write-Host "    .\GhostPath.ps1 -ObjType G" $Colors.Key
+    Write-Color "  Enumerate only groups:" $Colors.Warning
+    Write-Color "    .\GhostPath.ps1 -ObjType G" $Colors.Key
     Write-Host ""
-    Write-Host "  Get specific user properties:" $Colors.Warning
-    Write-Host "    .\GhostPath.ps1 -ObjType U -Name \"admin\" -Propertie *" $Colors.Key
+    Write-Color "  Get specific user properties:" $Colors.Warning
+    Write-Color "    .\GhostPath.ps1 -ObjType U -Name \"admin\" -Propertie *" $Colors.Key
     Write-Host ""
-    Write-Host ("─" * 76) $Colors.Separator
+    Write-Color ("─" * 76) $Colors.Separator
     Write-Host ""
     exit
 }
@@ -179,7 +179,7 @@ function Write-Subsection {
     Write-Host ""
     Write-Color "┌─ $Title" $Colors.SubSection
     Write-Color "└" $Colors.SubSection -NoNewLine
-    Write-Host ("─" * 70) $Colors.Separator
+    Write-Color ("─" * 70) $Colors.Separator
 }
 
 # ============================================
@@ -253,7 +253,7 @@ function Users-S {
             Write-Color $User.Properties["sAMAccountName"] $Colors.Danger
             if ($User.Properties["description"] -ne $null) {
                 Write-Color "      Description: " $Colors.Warning -NoNewLine
-                Write-Host $User.Properties["description"] $Colors.Key
+                Write-Color $User.Properties["description"] $Colors.Key
             }
         }
         Write-Host ""
@@ -268,13 +268,13 @@ function Users-S {
             Write-Color "  [SPN] " $Colors.Info -NoNewLine
             Write-Color $SPN.Properties["sAMAccountName"] $Colors.Key
             Write-Color "      SPN: " $Colors.SubSection -NoNewLine
-            Write-Host $SPN.Properties["serviceprincipalname"] $Colors.Value
+            Write-Color $SPN.Properties["serviceprincipalname"] $Colors.Value
             if ($SPN.Properties["description"] -ne $null) {
                 Write-Color "      Description: " $Colors.Warning -NoNewLine
-                Write-Host $SPN.Properties["description"] $Colors.Key
+                Write-Color $SPN.Properties["description"] $Colors.Key
             }
             Write-Color "      MemberOf: " $Colors.Section -NoNewLine
-            Write-Host ($SPN.Properties["memberof"] -join ", ") $Colors.Key
+            Write-Color ($SPN.Properties["memberof"] -join ", ") $Colors.Key
             Write-Host ""
         }
     }
@@ -290,7 +290,7 @@ function Users-S {
         Write-Color $User.Properties["sAMAccountName"] $Colors.Key
         if ($User.Properties["description"] -ne $null) {
             Write-Color "      └─ Description: " $Colors.Warning -NoNewLine
-            Write-Host $User.Properties["description"] $Colors.Separator
+            Write-Color $User.Properties["description"] $Colors.Separator
         }
         $userNum++
     }
@@ -361,14 +361,14 @@ function Machines-S {
             Write-Color $compName $Colors.Key
             if ($dnsName) {
                 Write-Color "    └─ DNS: " $Colors.Warning -NoNewLine
-                Write-Host $dnsName $Colors.Value
+                Write-Color $dnsName $Colors.Value
             }
             if ($osVer) {
                 Write-Color "         OS Ver: " $Colors.Separator -NoNewLine
-                Write-Host $osVer $Colors.Key
+                Write-Color $osVer $Colors.Key
             }
         }
-        Write-Host "  │" $Colors.Separator
+        Write-Color "  │" $Colors.Separator
     }
     
     Write-Host ""
@@ -443,7 +443,7 @@ function Groups-S {
             Write-Color $gName $Colors.Danger
             if ($Group.Properties["description"] -ne $null) {
                 Write-Color "      └─ " $Colors.Warning -NoNewLine
-                Write-Host $Group.Properties["description"] $Colors.Separator
+                Write-Color $Group.Properties["description"] $Colors.Separator
             }
         }
     }
@@ -459,7 +459,7 @@ function Groups-S {
         Write-Color $Group.Properties["sAMAccountName"] $Colors.Key
         if ($Group.Properties["description"] -ne $null) {
             Write-Color "      └─ " $Colors.Warning -NoNewLine
-            Write-Host $Group.Properties["description"] $Colors.Separator
+            Write-Color $Group.Properties["description"] $Colors.Separator
         }
     }
     Write-Host ""
@@ -477,10 +477,10 @@ function Groups-S {
         $members = $Group.Properties["member"]
         if ($members -and $members.Count -gt 0) {
             Write-Color "      ├─ Members: " $Colors.Info -NoNewLine
-            Write-Host "$($members.Count) member(s)" $Colors.Value
+            Write-Color "$($members.Count) member(s)" $Colors.Value
             foreach ($member in $members | Select-Object -First 3) {
                 Write-Color "      │  └─ " $Colors.Separator -NoNewLine
-                Write-Host $member $Colors.Key
+                Write-Color $member $Colors.Key
             }
             if ($members.Count -gt 3) {
                 Write-Color "      │  └─ ... and $($members.Count - 3) more" $Colors.Warning
@@ -490,7 +490,7 @@ function Groups-S {
         $memberof = $Group.Properties["memberof"]
         if ($memberof -and $memberof.Count -gt 0) {
             Write-Color "      └─ MemberOf: " $Colors.Section -NoNewLine
-            Write-Host ($memberof[0..2] -join ", ") $Colors.Key
+            Write-Color ($memberof[0..2] -join ", ") $Colors.Key
         }
         Write-Host ""
     }
@@ -594,8 +594,8 @@ switch ($ObjType) {
 
 # Footer
 Write-Host ""
-Write-Host ("─" * 76) $Colors.Separator
+Write-Color ("─" * 76) $Colors.Separator
 Write-Color "  👻 GhostPath Enumeration Complete" $Colors.Banner
-Write-Color "  [+]" $Colors.Success -NoNewLine; Write-Host " Scan finished at $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" $Colors.Key
-Write-Host ("─" * 76) $Colors.Separator
+Write-Color "  [+]" $Colors.Success -NoNewLine; Write-Color " Scan finished at $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" $Colors.Key
+Write-Color ("─" * 76) $Colors.Separator
 Write-Host ""
