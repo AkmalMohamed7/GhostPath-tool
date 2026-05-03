@@ -95,23 +95,23 @@ function Write-Color {
 # ============================================
 function Show-Banner {
     Write-Host ""
-    Write-Color "╔═══════════════════════════════════════════════════════════════════════╗" $Colors.Banner
-    Write-Color "║   _______    _  ____  _____ _______  _____          _______ _    _    ║" $Colors.Banner
-    Write-Color "║  / ____| |  | |/ __ \ / ____|__   __|  __ \    /\  |__   __| |  | |   ║" $Colors.Banner
-    Write-Color "║ | |  __| |__| | |  | | (___    | |  | |__) |  /  \    | |  | |__| |   ║" $Colors.Banner
-    Write-Color "║ | | |_ |  __  | |  | |\___ \   | |  |  ___/  / /\ \   | |  |  __  |   ║" $Colors.Banner
-    Write-Color "║ | |__| | |  | | |__| |____) |  | |  | |     / ____ \  | |  | |  | |   ║" $Colors.Banner
-    Write-Color "║  \_____|_|  |_|\____/|_____/   |_|  |_|    /_/    \_\ |_|  |_|  |_|   ║" $Colors.Banner
-    Write-Color "║                                                                       ║" $Colors.Banner
-    Write-Color "║                 👻 GHOSTPATH - AD ENUMERATION TOOL 👻                ║" $Colors.Banner
-    Write-Color "║                       Version 2.0 - Professional                      ║" $Colors.Banner
-    Write-Color "╚═══════════════════════════════════════════════════════════════════════╝" $Colors.Banner
+    Write-Color "+=======================================================================+" $Colors.Banner
+    Write-Color "|   _______    _  ____  _____ _______  _____          _______ _    _    |" $Colors.Banner
+    Write-Color "|  / ____| |  | |/ __ \ / ____|__   __|  __ \    /\  |__   __| |  | |   |" $Colors.Banner
+    Write-Color "| | |  __| |__| | |  | | (___    | |  | |__) |  /  \    | |  | |__| |   |" $Colors.Banner
+    Write-Color "| | | |_ |  __  | |  | |\___ \   | |  |  ___/  / /\ \   | |  |  __  |   |" $Colors.Banner
+    Write-Color "| | |__| | |  | | |__| |____) |  | |  | |     / ____ \  | |  | |  | |   |" $Colors.Banner
+    Write-Color "|  \_____|_|  |_|\____/|_____/   |_|  |_|    /_/    \_\ |_|  |_|  |_|   |" $Colors.Banner
+    Write-Color "|                                                                       |" $Colors.Banner
+    Write-Color "|                 [GHOST] GHOSTPATH - AD ENUMERATION TOOL [GHOST]                |" $Colors.Banner
+    Write-Color "|                       Version 2.0 - Professional                      |" $Colors.Banner
+    Write-Color "+=======================================================================+" $Colors.Banner
     Write-Host ""
     Write-Color "  [+]" $Colors.Success -NoNewLine; Write-Color " Target Domain: $DN" $Colors.Key
     Write-Color "  [+]" $Colors.Success -NoNewLine; Write-Color " Primary DC   : $PDC" $Colors.Key
     Write-Color "  [+]" $Colors.Success -NoNewLine; Write-Color " LDAP Path   : LDAP://$PDC/$DN" $Colors.Key
     Write-Host ""
-    Write-Color ("─" * 76) $Colors.Separator
+    Write-Color ("=" * 76) $Colors.Separator
     Write-Host ""
 }
 
@@ -154,7 +154,7 @@ function Show-Help {
     Write-Color "  Get specific user properties:" $Colors.Warning
     Write-Color "    .\GhostPath.ps1 -ObjType U -Name \"admin\" -Propertie *" $Colors.Key
     Write-Host ""
-    Write-Color ("─" * 76) $Colors.Separator
+    Write-Color ("-" * 76) $Colors.Separator
     Write-Host ""
     exit
 }
@@ -177,9 +177,9 @@ function Write-SectionHeader {
 function Write-Subsection {
     param([string]$Title)
     Write-Host ""
-    Write-Color "┌─ $Title" $Colors.SubSection
-    Write-Color "└" $Colors.SubSection -NoNewLine
-    Write-Color ("─" * 70) $Colors.Separator
+    Write-Color "+- $Title" $Colors.SubSection
+    Write-Color "+" $Colors.SubSection -NoNewLine
+    Write-Color ("-" * 70) $Colors.Separator
 }
 
 # ============================================
@@ -197,7 +197,7 @@ try {
 # USERS ENUMERATION
 # ============================================
 function Users-S {
-    Write-SectionHeader "USERS ENUMERATION" "═"
+    Write-SectionHeader "USERS ENUMERATION" "="
     Write-Color "[*] Scanning Active Directory users..." $Colors.Info
     Write-Host ""
     
@@ -245,7 +245,7 @@ function Users-S {
     
     # Display AS-REP Roasting Vulnerable Users (CRITICAL)
     if ($ASREPRoastable.Count -gt 0) {
-        Write-Subsection "⚠ VULNERABLE USERS (AS-REP Roasting)"
+        Write-Subsection "[!] VULNERABLE USERS (AS-REP Roasting)"
         Write-Color "[!] Found $($ASREPRoastable.Count) users vulnerable to AS-REP Roasting!" $Colors.Danger
         Write-Host ""
         foreach ($User in $ASREPRoastable) {
@@ -261,7 +261,7 @@ function Users-S {
     
     # Display Service Account Users (SPN)
     if ($SPNUsers.Count -gt 0) {
-        Write-Subsection "🔑 SERVICE ACCOUNTS (Kerberoasting Target)"
+        Write-Subsection "[KEY] SERVICE ACCOUNTS (Kerberoasting Target)"
         Write-Color "[*] Found $($SPNUsers.Count) users with SPN (Potential Kerberoasting)" $Colors.Warning
         Write-Host ""
         foreach ($SPN in $SPNUsers) {
@@ -280,7 +280,7 @@ function Users-S {
     }
     
     # Display Regular Users
-    Write-Subsection "👤 REGULAR USER ACCOUNTS"
+    Write-Subsection "[USER] REGULAR USER ACCOUNTS"
     Write-Color "[*] Found $($RegularUsers.Count) regular user accounts" $Colors.Success
     Write-Host ""
     
@@ -289,7 +289,7 @@ function Users-S {
         Write-Color "  [$userNum] " $Colors.Success -NoNewLine
         Write-Color $User.Properties["sAMAccountName"] $Colors.Key
         if ($User.Properties["description"] -ne $null) {
-            Write-Color "      └─ Description: " $Colors.Warning -NoNewLine
+            Write-Color "      +- Description: " $Colors.Warning -NoNewLine
             Write-Color $User.Properties["description"] $Colors.Separator
         }
         $userNum++
@@ -303,7 +303,7 @@ function Users-S {
 # MACHINES ENUMERATION
 # ============================================
 function Machines-S {
-    Write-SectionHeader "MACHINES ENUMERATION" "═"
+    Write-SectionHeader "MACHINES ENUMERATION" "="
     Write-Color "[*] Scanning Active Directory machines..." $Colors.Info
     Write-Host ""
     
@@ -332,7 +332,7 @@ function Machines-S {
         return
     }
     
-    Write-Subsection "🖥 DOMAIN COMPUTERS"
+    Write-Subsection "[PC] DOMAIN COMPUTERS"
     Write-Host ""
     
     # Group machines by OS for better readability
@@ -349,18 +349,18 @@ function Machines-S {
     # Display by OS
     foreach ($OS in $OSGroups.Keys | Sort-Object) {
         $machinesInGroup = $OSGroups[$OS]
-        Write-Color "  ┌─ $OS ($($machinesInGroup.Count))" $Colors.SubSection
-        Write-Color "  │" $Colors.Separator
+        Write-Color "  +- $OS ($($machinesInGroup.Count))" $Colors.SubSection
+        Write-Color "  |" $Colors.Separator
         
         foreach ($Machine in $machinesInGroup) {
             $compName = $Machine.Properties["sAMAccountName"] -replace '\$', ''
             $dnsName = $Machine.Properties["dnshostname"]
             $osVer = $Machine.Properties["operatingsystemversion"]
             
-            Write-Color "  ├─ " $Colors.Info -NoNewLine
+            Write-Color "  +- " $Colors.Info -NoNewLine
             Write-Color $compName $Colors.Key
             if ($dnsName) {
-                Write-Color "    └─ DNS: " $Colors.Warning -NoNewLine
+                Write-Color "    +- DNS: " $Colors.Warning -NoNewLine
                 Write-Color $dnsName $Colors.Value
             }
             if ($osVer) {
@@ -368,7 +368,7 @@ function Machines-S {
                 Write-Color $osVer $Colors.Key
             }
         }
-        Write-Color "  │" $Colors.Separator
+        Write-Color "  |" $Colors.Separator
     }
     
     Write-Host ""
@@ -379,7 +379,7 @@ function Machines-S {
 # GROUPS ENUMERATION
 # ============================================
 function Groups-S {
-    Write-SectionHeader "GROUPS ENUMERATION" "═"
+    Write-SectionHeader "GROUPS ENUMERATION" "="
     Write-Color "[*] Scanning Active Directory groups..." $Colors.Info
     Write-Host ""
     
@@ -432,7 +432,7 @@ function Groups-S {
                           "Account Operators", "Backup Operators", "Server Operators", "Print Operators",
                           "Remote Desktop Users", "Network Configuration Operators", "DNS Admins")
     
-    Write-SectionHeader "⚠ PRIVILEGED GROUPS" "═"
+    Write-SectionHeader "[!] PRIVILEGED GROUPS" "="
     Write-Color "[!] These groups have special privileges - worth investigating!" $Colors.Danger
     Write-Host ""
     
@@ -442,7 +442,7 @@ function Groups-S {
             Write-Color "  [!] " $Colors.Danger -NoNewLine
             Write-Color $gName $Colors.Danger
             if ($Group.Properties["description"] -ne $null) {
-                Write-Color "      └─ " $Colors.Warning -NoNewLine
+                Write-Color "      +- " $Colors.Warning -NoNewLine
                 Write-Color $Group.Properties["description"] $Colors.Separator
             }
         }
@@ -450,7 +450,7 @@ function Groups-S {
     Write-Host ""
     
     # Display Default Groups
-    Write-Subsection "📋 BUILT-IN GROUPS"
+    Write-Subsection "[LIST] BUILT-IN GROUPS"
     Write-Color "[*] Found $($DefaultGroups.Count) default/built-in groups" $Colors.Info
     Write-Host ""
     
@@ -458,38 +458,38 @@ function Groups-S {
         Write-Color "  [B] " $Colors.Section -NoNewLine
         Write-Color $Group.Properties["sAMAccountName"] $Colors.Key
         if ($Group.Properties["description"] -ne $null) {
-            Write-Color "      └─ " $Colors.Warning -NoNewLine
+            Write-Color "      +- " $Colors.Warning -NoNewLine
             Write-Color $Group.Properties["description"] $Colors.Separator
         }
     }
     Write-Host ""
     
     # Display Custom Groups
-    Write-Subsection "➕ CUSTOM GROUPS"
+    Write-Subsection "[+] CUSTOM GROUPS"
     Write-Color "[*] Found $($CustomGroups.Count) custom groups" $Colors.Success
     Write-Host ""
     
     foreach ($Group in $CustomGroups) {
         Write-Color "  [C] " $Colors.Success -NoNewLine
         Write-Color $Group.Properties["sAMAccountName"] $Colors.Key
-        Write-Color " ← Custom Group" $Colors.SubSection
+        Write-Color " <- Custom Group" $Colors.SubSection
         
         $members = $Group.Properties["member"]
         if ($members -and $members.Count -gt 0) {
-            Write-Color "      ├─ Members: " $Colors.Info -NoNewLine
+            Write-Color "      +- Members: " $Colors.Info -NoNewLine
             Write-Color "$($members.Count) member(s)" $Colors.Value
             foreach ($member in $members | Select-Object -First 3) {
-                Write-Color "      │  └─ " $Colors.Separator -NoNewLine
+                Write-Color "      |  +- " $Colors.Separator -NoNewLine
                 Write-Color $member $Colors.Key
             }
             if ($members.Count -gt 3) {
-                Write-Color "      │  └─ ... and $($members.Count - 3) more" $Colors.Warning
+                Write-Color "      |  +- ... and $($members.Count - 3) more" $Colors.Warning
             }
         }
         
         $memberof = $Group.Properties["memberof"]
         if ($memberof -and $memberof.Count -gt 0) {
-            Write-Color "      └─ MemberOf: " $Colors.Section -NoNewLine
+            Write-Color "      +- MemberOf: " $Colors.Section -NoNewLine
             Write-Color ($memberof[0..2] -join ", ") $Colors.Key
         }
         Write-Host ""
@@ -594,8 +594,8 @@ switch ($ObjType) {
 
 # Footer
 Write-Host ""
-Write-Color ("─" * 76) $Colors.Separator
-Write-Color "  👻 GhostPath Enumeration Complete" $Colors.Banner
+Write-Color ("-" * 76) $Colors.Separator
+Write-Color "  [GHOST] GhostPath Enumeration Complete" $Colors.Banner
 Write-Color "  [+]" $Colors.Success -NoNewLine; Write-Color " Scan finished at $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" $Colors.Key
-Write-Color ("─" * 76) $Colors.Separator
+Write-Color ("-" * 76) $Colors.Separator
 Write-Host ""
