@@ -338,8 +338,9 @@ function Machines-S {
     # Group machines by OS for better readability
     $OSGroups = @{}
     foreach ($Machine in $Machines) {
-        $OS = $Machine.Properties["operatingsystem"]
-        if ($OS -eq $null) { $OS = "Unknown OS" }
+        if ($Machine -eq $null -or $Machine.Properties -eq $null) { continue }
+        $osRaw = $Machine.Properties["operatingsystem"]
+        $OS = if ($osRaw -ne $null -and $osRaw.Count -gt 0) { "$($osRaw[0])" } else { "Unknown OS" }
         if (-not $OSGroups.ContainsKey($OS)) {
             $OSGroups[$OS] = @()
         }
@@ -353,9 +354,16 @@ function Machines-S {
         Write-Color "  |" $Colors.Separator
         
         foreach ($Machine in $machinesInGroup) {
-            $compName = $Machine.Properties["sAMAccountName"] -replace '\$', ''
-            $dnsName = $Machine.Properties["dnshostname"]
-            $osVer = $Machine.Properties["operatingsystemversion"]
+            if ($Machine -eq $null -or $Machine.Properties -eq $null) { continue }
+            
+            $compNameRaw = $Machine.Properties["sAMAccountName"]
+            $compName = if ($compNameRaw -ne $null -and $compNameRaw.Count -gt 0) { "$($compNameRaw[0])" -replace '\$', '' } else { "(unknown)" }
+            
+            $dnsNameRaw = $Machine.Properties["dnshostname"]
+            $dnsName = if ($dnsNameRaw -ne $null -and $dnsNameRaw.Count -gt 0) { "$($dnsNameRaw[0])" } else { $null }
+            
+            $osVerRaw = $Machine.Properties["operatingsystemversion"]
+            $osVer = if ($osVerRaw -ne $null -and $osVerRaw.Count -gt 0) { "$($osVerRaw[0])" } else { $null }
             
             Write-Color "  +- " $Colors.Info -NoNewLine
             Write-Color $compName $Colors.Key
