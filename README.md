@@ -72,7 +72,7 @@ It is designed to run from a domain-joined machine or with valid domain credenti
 
 ```powershell
 # Clone the repository
-git clone https://github.com/TeamE/GhostPath-tool.git
+git clone https://github.com/AkmalMohamed7/GhostPath-tool.git
 
 # Navigate to the directory
 cd GhostPath-tool
@@ -150,69 +150,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
 ## 📸 Sample Output
 
-```text
-╔═══════════════════════════════════════════════════════════════════════╗
-║              👻 GHOSTPATH - AD ENUMERATION TOOL 👻                   ║
-║                       Version 2.0 - Professional                      ║
-╚═══════════════════════════════════════════════════════════════════════╝
-
-  [+] Target Domain: DC=CONTOSO,DC=LOCAL
-  [+] Primary DC   : DC01.CONTOSO.LOCAL
-  [+] LDAP Path    : LDAP://DC01.CONTOSO.LOCAL/DC=CONTOSO,DC=LOCAL
-
-══════════════════════════════════════════════════════════════════════════
-                           USERS ENUMERATION
-══════════════════════════════════════════════════════════════════════════
-
-[+] Found 154 user accounts
-
-┌─ ⚠ VULNERABLE USERS (AS-REP Roasting)
-└──────────────────────────────────────────────────────────────────────
-  [!] svc_backup
-      Description: Backup service - preauthentication disabled
-
-┌─ [KEY] SERVICE ACCOUNTS (Kerberoasting Target)
-└──────────────────────────────────────────────────────────────────────
-  [SPN] MSSQL_SVC
-        SPN: MSSQLSvc/sqlserver.contoso.local:1433
-        MemberOf: Domain Users
-
-┌─ [USER] REGULAR USER ACCOUNTS
-└──────────────────────────────────────────────────────────────────────
-  [1] Administrator
-  [2] jdoe
-      └─ Description: John Doe - IT Department
-  [3] asmith
-
-══════════════════════════════════════════════════════════════════════════
-                        ⚠ PRIVILEGED GROUPS
-══════════════════════════════════════════════════════════════════════════
-[!] These groups have special privileges - worth investigating!
-
-  [!] Domain Admins
-      └─ Designated administrators of the domain
-  [!] Enterprise Admins
-
-┌─ [LIST] BUILT-IN GROUPS
-└──────────────────────────────────────────────────────────────────────
-  [B] Users
-  [B] Guests
-  [B] Remote Desktop Users
-
-┌─ [+] CUSTOM GROUPS
-└──────────────────────────────────────────────────────────────────────
-  [C] IT_HelpDesk  <- Custom Group
-      ├─ Members: 5 member(s)
-      │  └─ CN=Alice,OU=Users,DC=contoso,DC=local
-      │  └─ CN=Bob,OU=Users,DC=contoso,DC=local
-      │  └─ ... and 3 more
-      └─ MemberOf: Remote Desktop Users
-
-────────────────────────────────────────────────────────────────────────
-  [GHOST] GhostPath Enumeration Complete
-  [+] Scan finished at 2024-06-01 14:30:22
-────────────────────────────────────────────────────────────────────────
-```
+![GhostPath Sample Output](Screenshots/2026-05-03%2015%2015%2036.png)
 
 ---
 
